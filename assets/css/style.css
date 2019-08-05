@@ -1,7 +1,7 @@
 body {
     /* font-family: 'Mouse Memoirs', sans-serif;
     font-size: 30px; */
-    background-image: url(../html/chicos.jpeg);
+    background-image: url(../images/chicos.jpeg);
 }
 nav .brand-logo{
     font-family: 'Mouse Memoirs', sans-serif;
@@ -10,8 +10,10 @@ nav .brand-logo{
 
 /* styling for modal boxes */
 .modalDialog {
+	font-size: 20px;
 	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
+	/* font-family: Arial, Helvetica, sans-serif; */
+	font-family: 'Mouse Memoirs', sans-serif;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -31,15 +33,15 @@ nav .brand-logo{
 }
 
 .modalDialog > div {
-	width: 400px;
+	width: 300px;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
 	border-radius: 10px;
 	background: #fff;
-	background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);
+	background: -moz-linear-gradient(#fff3e0, #ef6c00);
+	background: -webkit-linear-gradient(#fff3e0, #ef6c00);
+	background: -o-linear-gradient(#fff3e0, #ef6c00);
 }
 
 .close {
