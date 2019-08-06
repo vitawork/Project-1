@@ -1,19 +1,10 @@
-var firebaseConfig = {
-  apiKey: "AIzaSyChhfkmuIxDTD5w2c-ZnzMrxdAEVSuJQqw",
-  authDomain: "proyect-1-52d99.firebaseapp.com",
-  databaseURL: "https://proyect-1-52d99.firebaseio.com",
-  projectId: "proyect-1-52d99",
-  storageBucket: "",
-  messagingSenderId: "550696355872",
-  appId: "1:550696355872:web:b5626b42359e8d42"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 var database = firebase.database();
 
 //Game object has all game vars and funtions
 var Game = {
+  userName: "",
+  userKey: "",
+
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],
     colors: [
@@ -37,23 +28,46 @@ var Game = {
       "Eight",
       "Nine"
     ]
+  },
+
+  AddUser(name) {
+    database.ref().once("value", function(snapshot) {
+      var found = false;
+      var data = snapshot.val();
+      for (var key in data) {
+        var user = data[key];
+        if (user.name === name) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        Game.userName = name;
+        Game.userKey = database.ref().push({ name: name }).key;
+      }
+    });
+  },
+
+  ////every time user win > send the learned think to the database
+  AddProgress(where, value) {
+    database.ref(this.userName + "/" + where).once("value", function(snapshot) {
+      var data = snapshot.val();
+      if (snapshot.val() !== null) {
+        console.log("no es null");
+      }
+      console.log(data);
+    });
   }
   ////////Here add game  funtions***************
 };
 
-//User object has all user funtions
-var User = {
-  name: "",
-  AddUser(name) {
-    /////implent it *************
-  },
-  SelectUser(name) {
-    /////implent it *************
-  }
-};
-
 $(document).ready(function() {
+  //   Game.userName="vita";
 
+  //   database.ref("vita").collection("colors");
 
-    
+  //   Game.AddProgress("colors","red");
+  // database.ref('vita/hgvghv').push("ppppppp");
+  var a = Game.AddUser("Gordon");
+  //   console.log(a);
 });
