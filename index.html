@@ -9,67 +9,71 @@
     <!-- Firebase References -->
     <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-database.js"></script>
-
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-
-     <!--Import Google Icon Font-->
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <!--Import materialize.css-->
-     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
-     <!--Let browser know website is optimized for mobile-->
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="assets/css/style.css"
-    />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mouse+Memoirs&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css"/>
   </head>
+  
   <body>
 
-
-      <nav> Chicos </nav>
-
-      <ul id="slide-out" class="sidenav">
-        <li><div class="user-view">
-          <div class="background">
-            <img src="images/office.jpg">
+<!-- nav bar -->
+      <nav>
+          <div class="nav-wrapper #e65100 orange darken-4">
+            <a href="#!" class="brand-logo center">CHICOS</a>
+            <ul id="slide-out" class="side-nav">
+                  <li><a href="#openModal1">Open Modal 1</a> </li>
+                  <li> <a href="#openModal2">Open Modal 2</a></li>
+                  <li><a href="#openModal3">Open Modal 3</a> </li>  
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a class="collapsible-header">Dropdown<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a href="#!">Dropdown Item 1</a></li>
+                            <li><a href="#!">Dropdown Item 2</a></li>
+                            <li><a href="#!">Dropdown Item 3</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
           </div>
-          <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-          <a href="#name"><span class="white-text name">John Doe</span></a>
-          <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-      </ul>
-      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </nav>
 
+<!-- divs for modal boxes -->
+  <div id="openModal1" class="modalDialog">
+          <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>Modal Box 1</h2>
+              <p>This box will do something cool!</p>
+              <p>No Javascript required!</p>
+          </div>
+      </div>
+ 
+      <div id="openModal2" class="modalDialog">
+              <div>
+                  <a href="#close" title="Close" class="close">X</a>
+                  <h2>Modal Box 2</h2>
+                  <p>This box will do something cool!</p>
+                  <p>No Javascript required!</p>
+              </div>
+          </div>
 
-
-    
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-    ></script>
-
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-
+          <div id="openModal3" class="modalDialog">
+                  <div>
+                      <a href="#close" title="Close" class="close">X</a>
+                      <h2>Modal Box 3</h2>
+                      <p>This box will do something cool!</p>
+                      <p>No Javascript required!</p>
+                  </div>
+              </div>
+ 
     <script src="assets/javascript/app.js"></script>
 
 
