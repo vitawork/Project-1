@@ -1,4 +1,4 @@
-body {
+.index, .home, .learning{
     background-image: url(../images/chicos.jpeg);
 }
 nav .brand-logo{
@@ -13,8 +13,22 @@ nav .brand-logo{
 	font-size: 24px;
 }
 
+.card{
+	font-family: 'Mouse Memoirs', sans-serif;
+	margin-top: 100px;
+}
+
+.icon_prefix{
+	color: black;
+	font-size: 24px;
+}
+
+#table{
+	background-color: white;
+	margin-top: 200px;
+}
 /* styling for modal boxes */
-.modalDialog {
+/* .modalDialog {
 	font-size: 20px;
 	position: fixed;
 	font-family: 'Mouse Memoirs', sans-serif;
@@ -36,6 +50,7 @@ nav .brand-logo{
 }
 .modalDialog > div {
 	width: 300px;
+	text-align: center;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
@@ -64,4 +79,4 @@ nav .brand-logo{
 	box-shadow: 1px 1px 3px #000;
 }
 .close:hover { background: #00d9ff; }
-
+ */
