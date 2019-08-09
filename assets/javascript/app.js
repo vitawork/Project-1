@@ -104,8 +104,276 @@ var Game = {
   }
   ////////Here add game  funtions***************
 };
+////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function() {
+  var timer = 60;
+  var right = 0;
+  var wrong = 0;
+  var tout = 0;
+  var actualqindex = -1;
+  var answerposition = -1;
+
+  var audiofail = new Audio("./assets/sounds/fail.mp3");
+  var audiocorrect = new Audio("./assets/sounds/correct.wav");
+
+  var next_timeout;
+  var question_timeout;
+  var intervalId;
+
+  var questions = [
+    {
+      question: "Some months have 31 days; how many have 28?",
+      answers: ["One", "Twelve", "Four"],
+      ansposition: 0,
+      imageUrl:
+        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
+    },
+    {
+      question: "Some months have 31 days; how many have 28?",
+      answers: ["One", "Twelve", "Four"],
+      ansposition: 0,
+      imageUrl:
+        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
+    },
+    {
+      question: "Some months have 31 days; how many have 28?",
+      answers: ["One", "Twelve", "Four"],
+      ansposition: 0,
+      imageUrl:
+        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
+    },
+    {
+      question:
+        "Is it legal for a man in California to marry his widow’s sister?",
+      answers: [
+        "Of course he can",
+        "No he's dead",
+        "It depends on the circumstances of his death"
+      ],
+      ansposition: 1,
+      imageUrl:
+        "http://quizpug.com/wp-content/uploads/qc-images/588243d20c640.jpg"
+    }
+  ];
+
+  function First_to_UpperCase(word) {
+    var w = "";
+
+    w = w + word[0].toUpperCase();
+    for (let i = 1; i < word.length; i++) {
+      w = w + word[i];
+    }
+    return w;
+  }
+
+  function reset() {
+    right = 0;
+    wrong = 0;
+    tout = 0;
+    actualqindex = -1;
+    answerposition = -1;
+    next();
+  }
+
+  function show_question_answers(index) {
+    var text = Game.themes.colors[index];
+    $.ajax({
+      type: "GET",
+      url: "https://www.googleapis.com/language/translate/v2",
+      data: {
+        key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
+        source: "en",
+        target: "es",
+        q: text
+      },
+      dataType: "jsonp",
+      success: function(data) {
+        $("#question").html(
+          First_to_UpperCase(data.data.translations[0].translatedText)
+        );
+
+        answerposition = Math.floor(Math.random() * 4 + 1);
+        for (let i = 1; i < 5; i++) {
+          $("#answer" + i).html("");
+        }
+
+        for (let i = 1; i < 5; i++) {
+          if (i === answerposition) {
+            $("#answer" + i)
+              .html(Game.themes.colors[index])
+              .css({
+                "background-color": Game.themes.colors[index],
+                opacity: "0.85"
+              });
+          } else {
+            var j = Math.floor(Math.random() * Game.themes.colors.length);
+            while (
+              $("#answer1").html() === Game.themes.colors[j] ||
+              $("#answer2").html() === Game.themes.colors[j] ||
+              $("#answer3").html() === Game.themes.colors[j] ||
+              $("#answer4").html() === Game.themes.colors[j] ||
+              index === j
+            ) {
+              j = Math.floor(Math.random() * Game.themes.colors.length);
+            }
+            $("#answer" + i)
+              .html(Game.themes.colors[j])
+              .css({
+                "background-color": Game.themes.colors[j],
+                opacity: "0.85"
+              });
+          }
+        }
+      },
+      error: function(data) {
+        alert("Translate API has failed");
+      }
+    });
+  }
+
+  reset(); ///////reseating to start************************
+
+  function right_wrong_timeout_answer(rwt) {
+    clearTimeout(question_timeout);
+    clearInterval(intervalId);
+
+    if (rwt === "Right Answer") {
+      right++;
+      $("#winrow h4").text("  " + right);
+    } else {
+      if (rwt === "Wrong Answer") {
+        wrong++;
+        $("#looserow h4").text("  " + wrong);
+      } else {
+        tout++;
+        $("#timeoutrow h4").text("  " + tout);
+      }
+    }
+
+    $("#divcentral3").css("display", "none");
+    $("#divcentral1").fadeOut(500, function() {
+      $("#divcentral2").fadeIn(500, function() {
+        $("#rwt")
+          .fadeOut()
+          .fadeIn()
+          .fadeOut()
+          .fadeIn();
+      });
+    });
+    $("#rwt").text(rwt);
+
+    $("#answer").text(
+      "Answer: " +
+        questions[actualqindex].answers[questions[actualqindex].ansposition]
+    );
+    if (actualqindex === questions.length - 1) {
+      $(".next").text("Finish");
+    }
+    next_timeout = setTimeout(function() {
+      next();
+    }, 6000);
+  }
+
+  function next() {
+    if (actualqindex === Game.themes.colors.length - 1) {
+      $("#divcentral1").css("display", "none");
+      $("#divcentral2").fadeOut(500, function() {
+        $("#divcentral3").fadeIn(500);
+      });
+      $("#winrow h1").text("Correct: " + right);
+      $("#looserow h1").text("Wrong: " + wrong);
+      $("#timeoutrow h1").text("Time Out: " + tout);
+    } else {
+      $(".next").text("Next");
+      actualqindex++;
+      timer = 60;
+
+      $("#divcentral3").css("display", "none");
+      $("#divcentral2").fadeOut(500, function() {
+        $("#divcentral1").fadeIn(500);
+
+        $("#answer4").hide();
+        $("#answer3").hide();
+        $("#answer2").hide();
+        $("#answer1")
+          .hide()
+          .show(300, function() {
+            $("#answer2").show(300, function() {
+              $("#answer3").show(300, function() {
+                $("#answer4").show(300);
+              });
+            });
+          });
+      });
+
+      $("#timerrow h4").text("00:00");
+      $("#winrow h4").text("  " + right);
+      $("#looserow h4").text("  " + wrong);
+      $("#timeoutrow h4").text("  " + tout);
+
+      show_question_answers(actualqindex); 
+
+      intervalId = setInterval(count, 1000);
+
+      question_timeout = setTimeout(function() {
+        clearInterval(intervalId);
+        audiofail.play();
+        right_wrong_timeout_answer("Time Out"); //////////////
+      }, 1000 * timer);
+    }
+  }
+
+  function count() {
+    timer--;
+    var converted = timeConverter(timer);
+    $("#timerrow h4").text(converted);
+  }
+
+  function timeConverter(t) {
+    var minutes = Math.floor(t / 60);
+    var seconds = t - minutes * 60;
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    if (minutes === 0) {
+      minutes = "00";
+    } else if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    return minutes + ":" + seconds;
+  }
+
+  // answers buttons////////////
+  $(".q").click(function() {
+    var correctans= "answer"+answerposition;
+    console.log($(this).attr("id"));
+    if ($(this).attr("id") === correctans) {
+      right_wrong_timeout_answer("Right Answer");
+      audiocorrect.play();
+    } else {
+      right_wrong_timeout_answer("Wrong Answer");
+      audiofail.play();
+    }
+  });
+
+
+
+  // button next///////////
+  $(".next").click(function() {
+    next();
+    clearTimeout(next_timeout);
+  });
+
+  $(".start").click(function() {
+    reset();
+  });
+
+  ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
+
   Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
 
   //////getting the animals progress
@@ -126,16 +394,29 @@ $(document).ready(function() {
     Game.FillingProgressTables(data, "numbers");
   });
 
-
-
-
-
-
+  var text = "welcome";
+  $.ajax({
+    type: "GET",
+    url: "https://www.googleapis.com/language/translate/v2",
+    data: {
+      key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
+      source: "en",
+      target: "es",
+      q: text
+    },
+    dataType: "jsonp",
+    success: function(data) {
+      console.log(data.data.translations[0].translatedText);
+    },
+    error: function(data) {
+      alert("Translate API has failed");
+    }
+  });
 
   // Game.AddUser("Gordon");////************
 
-  $(".card-header").on("click", function() {
-    //////delete, only for test******
-    Game.AddProgress("numbers", "seven"); //////delete, only for test********
-  }); //////delete, only for test*******
+  // $(".card-header").on("click", function() {
+  //   //////delete, only for test******
+  //   Game.AddProgress("numbers", "seven"); //////delete, only for test********
+  // }); //////delete, only for test*******
 });
