@@ -104,15 +104,23 @@ var Game = {
   }
   ////////Here add game  funtions***************
 };
-////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
+
 
 $(document).ready(function() {
+  ////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
+  
+  
+  
+
+
+
   var timer = 60;
   var right = 0;
   var wrong = 0;
   var tout = 0;
   var actualqindex = -1;
   var answerposition = -1;
+  var transanswer = "";
 
   var audiofail = new Audio("./assets/sounds/fail.mp3");
   var audiocorrect = new Audio("./assets/sounds/correct.wav");
@@ -121,41 +129,6 @@ $(document).ready(function() {
   var question_timeout;
   var intervalId;
 
-  var questions = [
-    {
-      question: "Some months have 31 days; how many have 28?",
-      answers: ["One", "Twelve", "Four"],
-      ansposition: 0,
-      imageUrl:
-        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
-    },
-    {
-      question: "Some months have 31 days; how many have 28?",
-      answers: ["One", "Twelve", "Four"],
-      ansposition: 0,
-      imageUrl:
-        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
-    },
-    {
-      question: "Some months have 31 days; how many have 28?",
-      answers: ["One", "Twelve", "Four"],
-      ansposition: 0,
-      imageUrl:
-        "http://quizpug.com/wp-content/uploads/qc-images/588243d1c523a.jpg"
-    },
-    {
-      question:
-        "Is it legal for a man in California to marry his widow’s sister?",
-      answers: [
-        "Of course he can",
-        "No he's dead",
-        "It depends on the circumstances of his death"
-      ],
-      ansposition: 1,
-      imageUrl:
-        "http://quizpug.com/wp-content/uploads/qc-images/588243d20c640.jpg"
-    }
-  ];
 
   function First_to_UpperCase(word) {
     var w = "";
@@ -167,12 +140,13 @@ $(document).ready(function() {
     return w;
   }
 
-  function reset() {
+  function Reset_Colors_Activity() {
     right = 0;
     wrong = 0;
     tout = 0;
     actualqindex = -1;
     answerposition = -1;
+    transanswer = "";
     next();
   }
 
@@ -189,9 +163,10 @@ $(document).ready(function() {
       },
       dataType: "jsonp",
       success: function(data) {
-        $("#question").html(
-          First_to_UpperCase(data.data.translations[0].translatedText)
+        transanswer = First_to_UpperCase(
+          data.data.translations[0].translatedText
         );
+        $("#question").html(transanswer);
 
         answerposition = Math.floor(Math.random() * 4 + 1);
         for (let i = 1; i < 5; i++) {
@@ -232,7 +207,11 @@ $(document).ready(function() {
     });
   }
 
-  reset(); ///////reseating to start************************
+
+  Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
+  Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
+ 
+
 
   function right_wrong_timeout_answer(rwt) {
     clearTimeout(question_timeout);
@@ -240,6 +219,7 @@ $(document).ready(function() {
 
     if (rwt === "Right Answer") {
       right++;
+      Game.AddProgress("colors", Game.themes.colors[actualqindex]);
       $("#winrow h4").text("  " + right);
     } else {
       if (rwt === "Wrong Answer") {
@@ -263,11 +243,20 @@ $(document).ready(function() {
     });
     $("#rwt").text(rwt);
 
-    $("#answer").text(
-      "Answer: " +
-        questions[actualqindex].answers[questions[actualqindex].ansposition]
-    );
-    if (actualqindex === questions.length - 1) {
+    $("#answer")
+      .text("Answer: ")
+      .css({
+        "background-color": Game.themes.colors[actualqindex],
+        opacity: "0.85"
+      });
+    $("#transanswer")
+      .text(transanswer)
+      .css({
+        "background-color": Game.themes.colors[actualqindex],
+        opacity: "0.85"
+      });
+
+    if (actualqindex === Game.themes.colors.length.length - 1) {
       $(".next").text("Finish");
     }
     next_timeout = setTimeout(function() {
@@ -286,7 +275,7 @@ $(document).ready(function() {
       $("#timeoutrow h1").text("Time Out: " + tout);
     } else {
       $(".next").text("Next");
-      actualqindex++;
+
       timer = 60;
 
       $("#divcentral3").css("display", "none");
@@ -312,14 +301,35 @@ $(document).ready(function() {
       $("#looserow h4").text("  " + wrong);
       $("#timeoutrow h4").text("  " + tout);
 
-      show_question_answers(actualqindex); 
+      database.ref(Game.userKey+"/colors").once("value", function(snapshot) {
+        var found = true;
+        var data = snapshot.val();
+        console.log(data);
+        while (found && actualqindex < Game.themes.colors.length ) {
+          found = false;
+          console.log("entro");
+          for (var key in data) {
+            if (data[key] === Game.themes.colors[actualqindex + 1]) {
+              found = true;
+              break;
+            }
+          }
+          actualqindex++;
+        }
+
+        if (!found) {
+          show_question_answers(actualqindex); /////////////************
+        } else {
+          ///////////////////decirles que lo saben todo*********
+        }
+      });
 
       intervalId = setInterval(count, 1000);
 
       question_timeout = setTimeout(function() {
         clearInterval(intervalId);
         audiofail.play();
-        right_wrong_timeout_answer("Time Out"); //////////////
+        right_wrong_timeout_answer("Time Out"); //////////////*******
       }, 1000 * timer);
     }
   }
@@ -349,8 +359,7 @@ $(document).ready(function() {
 
   // answers buttons////////////
   $(".q").click(function() {
-    var correctans= "answer"+answerposition;
-    console.log($(this).attr("id"));
+    var correctans = "answer" + answerposition;
     if ($(this).attr("id") === correctans) {
       right_wrong_timeout_answer("Right Answer");
       audiocorrect.play();
@@ -360,8 +369,6 @@ $(document).ready(function() {
     }
   });
 
-
-
   // button next///////////
   $(".next").click(function() {
     next();
@@ -369,12 +376,12 @@ $(document).ready(function() {
   });
 
   $(".start").click(function() {
-    reset();
+    Reset_Colors_Activity();
   });
 
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
 
-  Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
+
 
   //////getting the animals progress
   database.ref(Game.userKey + "/animals").on("value", function(snapshot) {
@@ -392,25 +399,6 @@ $(document).ready(function() {
   database.ref(Game.userKey + "/numbers").on("value", function(snapshot) {
     data = snapshot.val();
     Game.FillingProgressTables(data, "numbers");
-  });
-
-  var text = "welcome";
-  $.ajax({
-    type: "GET",
-    url: "https://www.googleapis.com/language/translate/v2",
-    data: {
-      key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
-      source: "en",
-      target: "es",
-      q: text
-    },
-    dataType: "jsonp",
-    success: function(data) {
-      console.log(data.data.translations[0].translatedText);
-    },
-    error: function(data) {
-      alert("Translate API has failed");
-    }
   });
 
   // Game.AddUser("Gordon");////************
