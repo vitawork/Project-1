@@ -139,3 +139,7 @@ $(document).ready(function() {
     Game.AddProgress("numbers", "seven"); //////delete, only for test********
   }); //////delete, only for test*******
 });
+$(".button-collapse").sideNav({
+    menuWidth: 300,
+    edge: 'left',
+});

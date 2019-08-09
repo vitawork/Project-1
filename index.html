@@ -17,61 +17,50 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css"/>
   </head>
   
-  <body>
-
+  <body class="index">
 <!-- nav bar -->
       <nav>
-          <div class="nav-wrapper #e65100 orange darken-4">
+          <div class="nav-wrapper #4db6ac teal lighten-2">
             <a href="#!" class="brand-logo center">CHICOS</a>
-            <ul id="slide-out" class="side-nav">
-                  <li><a href="#openModal1">Open Modal 1</a> </li>
-                  <li> <a href="#openModal2">Open Modal 2</a></li>
-                  <li><a href="#openModal3">Open Modal 3</a> </li>  
-                  <li class="no-padding">
-                    <ul class="collapsible collapsible-accordion">
-                      <li>
-                        <a class="collapsible-header">Dropdown<i class="material-icons">arrow_drop_down</i></a>
-                        <div class="collapsible-body">
-                          <ul>
-                            <li><a href="#!">Dropdown Item 1</a></li>
-                            <li><a href="#!">Dropdown Item 2</a></li>
-                            <li><a href="#!">Dropdown Item 3</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-            <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
           </div>
         </nav>
 
-<!-- divs for modal boxes -->
-  <div id="openModal1" class="modalDialog">
-          <div>
-              <a href="#close" title="Close" class="close">X</a>
-              <h2>Modal Box 1</h2>
-              <p>This box will do something cool!</p>
-              <p>No Javascript required!</p>
+        <div class="row">
+          <div class="col s6 m3"></div>
+            <div class="col s12 m6 center">
+              <div class="card #4db6ac teal lighten-2">
+                <div class="card-content white-text">
+                  <span class="card-title"><h1>Welcome, Bienvenidos!</h1></span>
+                  <p><h3>Login Here:</h3></p>
+                </div>
+
+                <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input placeholder="User Name" id="username" type="text" class="validate">
+                          <label for="username"></label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                 <!-- <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                          <div class="input-field col s12 center">
+                          <textarea id="textarea1" class="materialize-textarea"></textarea>
+                          <label for="textarea1">User Name</label>
+                        </div>
+                      </div>
+                    </form>
+                  </div> -->
+
+            </div>
           </div>
-      </div>
- 
-      <div id="openModal2" class="modalDialog">
-              <div>
-                  <a href="#close" title="Close" class="close">X</a>
-                  <h2>Modal Box 2</h2>
-                  <p>This box will do something cool!</p>
-                  <p>No Javascript required!</p>
-              </div>
-          </div>
-
-
-    
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-    ></script>
-
+        </div>
+              
     <script src="assets/javascript/app.js"></script>
 
 
