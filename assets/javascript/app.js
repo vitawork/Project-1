@@ -1,3 +1,6 @@
+var audiofail = new Audio("../sounds/fail.mp3");
+var audiocorrect = new Audio("../sounds/correct.wav");
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyChhfkmuIxDTD5w2c-ZnzMrxdAEVSuJQqw",
@@ -77,6 +80,14 @@ var Game = {
       }
     });
   },
+  DeleteProgress(where) {
+    database.ref(this.userKey + "/" + where).once("value", function(snapshot) {
+      var data = snapshot.val();
+      for (var key in data) {
+        database.ref(Game.userKey + "/" + where + "/" + key).remove();
+      }
+    });
+  },
 
   ////filling progress.html
   FillingProgressTables(data, theme) {
@@ -105,14 +116,8 @@ var Game = {
   ////////Here add game  funtions***************
 };
 
-
 $(document).ready(function() {
   ////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
-  
-  
-  
-
-
 
   var timer = 60;
   var right = 0;
@@ -122,13 +127,9 @@ $(document).ready(function() {
   var answerposition = -1;
   var transanswer = "";
 
-  var audiofail = new Audio("./assets/sounds/fail.mp3");
-  var audiocorrect = new Audio("./assets/sounds/correct.wav");
-
   var next_timeout;
   var question_timeout;
   var intervalId;
-
 
   function First_to_UpperCase(word) {
     var w = "";
@@ -207,11 +208,8 @@ $(document).ready(function() {
     });
   }
 
-
   Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
   Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
- 
-
 
   function right_wrong_timeout_answer(rwt) {
     clearTimeout(question_timeout);
@@ -256,9 +254,20 @@ $(document).ready(function() {
         opacity: "0.85"
       });
 
-    if (actualqindex === Game.themes.colors.length.length - 1) {
-      $(".next").text("Finish");
-    }
+    database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
+      var data = snapshot.val();
+      var totalitemsdb = 0;
+
+      for (var key in data) {
+        totalitemsdb++;
+      }
+      if (totalitemsdb + tout + wrong === Game.themes.colors.length) {
+        $(".next").text("Finish");
+      } else {
+        $(".next").text("Next");
+      }
+    });
+
     next_timeout = setTimeout(function() {
       next();
     }, 6000);
@@ -266,6 +275,20 @@ $(document).ready(function() {
 
   function next() {
     if (actualqindex === Game.themes.colors.length - 1) {
+      database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
+        var data = snapshot.val();
+        var totalitemsdb = 0;
+
+        for (var key in data) {
+          totalitemsdb++;
+        }
+
+        if (totalitemsdb === Game.themes.colors.length) {
+          $(".start").html("Clean Progress");
+        } else {
+          $(".start").html("Start Again");
+        }
+      });
       $("#divcentral1").css("display", "none");
       $("#divcentral2").fadeOut(500, function() {
         $("#divcentral3").fadeIn(500);
@@ -274,63 +297,59 @@ $(document).ready(function() {
       $("#looserow h1").text("Wrong: " + wrong);
       $("#timeoutrow h1").text("Time Out: " + tout);
     } else {
-      $(".next").text("Next");
-
-      timer = 60;
-
-      $("#divcentral3").css("display", "none");
-      $("#divcentral2").fadeOut(500, function() {
-        $("#divcentral1").fadeIn(500);
-
-        $("#answer4").hide();
-        $("#answer3").hide();
-        $("#answer2").hide();
-        $("#answer1")
-          .hide()
-          .show(300, function() {
-            $("#answer2").show(300, function() {
-              $("#answer3").show(300, function() {
-                $("#answer4").show(300);
-              });
-            });
-          });
-      });
-
-      $("#timerrow h4").text("00:00");
-      $("#winrow h4").text("  " + right);
-      $("#looserow h4").text("  " + wrong);
-      $("#timeoutrow h4").text("  " + tout);
-
-      database.ref(Game.userKey+"/colors").once("value", function(snapshot) {
-        var found = true;
+      database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
         var data = snapshot.val();
-        console.log(data);
-        while (found && actualqindex < Game.themes.colors.length ) {
-          found = false;
-          console.log("entro");
-          for (var key in data) {
-            if (data[key] === Game.themes.colors[actualqindex + 1]) {
-              found = true;
-              break;
-            }
+        var found = false;
+        var totalitemsdb = 0;
+
+        actualqindex++;
+        for (var key in data) {
+          totalitemsdb++;
+          if (data[key] === Game.themes.colors[actualqindex]) {
+            found = true;
           }
-          actualqindex++;
         }
 
-        if (!found) {
-          show_question_answers(actualqindex); /////////////************
+        if (found) {
+          next();
         } else {
-          ///////////////////decirles que lo saben todo*********
+          $(".next").text("Next");
+
+          timer = 60;
+
+          $("#divcentral3").css("display", "none");
+          $("#divcentral2").fadeOut(500, function() {
+            $("#divcentral1").fadeIn(500);
+
+            $("#answer4").hide();
+            $("#answer3").hide();
+            $("#answer2").hide();
+            $("#answer1")
+              .hide()
+              .show(300, function() {
+                $("#answer2").show(300, function() {
+                  $("#answer3").show(300, function() {
+                    $("#answer4").show(300);
+                  });
+                });
+              });
+          });
+
+          $("#timerrow h4").text("00:00");
+          $("#winrow h4").text("  " + right);
+          $("#looserow h4").text("  " + wrong);
+          $("#timeoutrow h4").text("  " + tout);
+
+          show_question_answers(actualqindex);
+          intervalId = setInterval(count, 1000);
+
+          question_timeout = setTimeout(function() {
+            clearInterval(intervalId);
+            audiofail.play();
+            right_wrong_timeout_answer("Time Out");
+          }, 1000 * timer);
         }
       });
-
-      intervalId = setInterval(count, 1000);
-
-      question_timeout = setTimeout(function() {
-        clearInterval(intervalId);
-        audiofail.play();
-        right_wrong_timeout_answer("Time Out"); //////////////*******
-      }, 1000 * timer);
     }
   }
 
@@ -376,12 +395,13 @@ $(document).ready(function() {
   });
 
   $(".start").click(function() {
+    if ($(".start").text() === "Clean Progress") {
+      Game.DeleteProgress("colors");
+    }
     Reset_Colors_Activity();
   });
 
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
-
-
 
   //////getting the animals progress
   database.ref(Game.userKey + "/animals").on("value", function(snapshot) {

@@ -101,9 +101,9 @@ header {
 }
 
 .start {
+  margin: 0 auto;
   min-width: 30%;
   height: 150%;
-  margin-left: 35%;
   font-size: 25px;
   margin-top: 50px;
 }
