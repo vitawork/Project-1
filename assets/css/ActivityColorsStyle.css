@@ -1,0 +1,195 @@
+* {
+  font-family: 'Mouse Memoirs', sans-serif;
+  text-align: center;
+  margin: 0 auto;
+  color: rgba(70, 70, 70, 0.884);
+}
+
+body{
+  background-image: url(../images/chicos.jpeg);
+}
+
+/* #headerdiv {
+  border-top: solid 4px rgb(17, 17, 17);
+  border-bottom: solid 4px rgb(17, 17, 17);
+  margin-top: 15px;
+} */
+
+nav .brand-logo {
+  font-family: "Roboto", sans-serif;
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  font-size: 2.1rem;
+  padding: 0;
+  white-space: nowrap;
+}
+
+header {
+  margin-top: 15px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.322),
+    white,
+    white,
+    white,
+    white,
+    rgba(255, 255, 255, 0.322)
+  );
+  font-size: 50px;
+  margin-bottom: 15px;
+  color: #6c757d;
+}
+
+#divcentral1 {
+  display: none;
+  position: relative;
+}
+
+#divcentral2 {
+  display: none;
+}
+
+#divcentral3 {
+  display: none;
+}
+
+#timerrow h4 {
+  position: absolute;
+  bottom: 0px;
+  right: 2%;
+  color: rgb(41, 41, 41);
+}
+
+.tc {
+  width: 20px;
+  text-align: left;
+ margin: 0 auto;
+}
+
+.allmaindiv {
+  /* background-image: linear-gradient(white, rgb(0, 124, 128)); */
+  /* margin-top: 40px; */
+  margin-bottom: 15px;
+  min-height: 400px;
+}
+
+#row1 {
+  padding-top: 30px;
+  margin-bottom: 30px;
+}
+
+.q {
+  color: rgba(70, 70, 70, 0.884);
+  width: 85%;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 7px;
+  margin-left: 7.5%;
+}
+
+#answer {
+  padding: 15px 15px 0px 15px;
+  margin: 0px 10px 0px 10px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+#transanswer {
+  padding: 0px 15px 15px 15px;
+  margin: 0px 10px 10px 10px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.q:hover {
+  background: rgb(15, 111, 126);
+  color: azure;
+}
+
+.next {
+  width: 30%;
+  height: 50px;
+  margin-left: 35%;
+  font-size: 25px;
+}
+
+.start {
+  margin: 0 auto;
+  min-width: 30%;
+  height: 150%;
+  font-size: 25px;
+  margin-top: 50px;
+}
+
+#row2 {
+  padding-bottom: 20px;
+}
+
+#rwt {
+  width: 85%;
+  font-size: 500%;
+  margin-bottom: 40px;
+}
+
+#question {
+  margin-bottom: 20px;
+}
+
+#winrow,
+#looserow,
+#timeoutrow {
+  margin: 0 auto;
+  padding: 0;
+}
+
+#divcentral3 #winrow {
+  margin-top: 50px;
+}
+
+#questionimg {
+  width: 90%;
+  border-radius: 2%;
+  border: solid 1px rgba(70, 70, 70, 0.884);
+  height: 95%;
+}
+
+#colanswers {
+  margin-top: 20px;
+}
+
+#row1 {
+  padding-top: 40px;
+}
+
+#colrigth {
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-family: 'Mouse Memoirs', sans-serif;
+  color: black;
+  padding: 10px;
+  margin: 5px;
+}
+
+h3 {
+  font-size: 2rem;
+  font-family: 'Mouse Memoirs', sans-serif;
+}
+
+.container-fluid {
+  margin-top: 20px;
+  width: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: 15px;
+  margin-left: 15px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+#colpictureright{
+  margin-bottom: 40px;
+}
