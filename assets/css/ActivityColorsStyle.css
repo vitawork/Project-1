@@ -63,8 +63,8 @@ header {
 
 .tc {
   width: 20px;
-  text-align: left;
- margin: 0 auto;
+  /* text-align: left; */
+  margin: 0 auto;
 }
 
 .allmaindiv {
@@ -74,10 +74,10 @@ header {
   min-height: 400px;
 }
 
-#row1 {
+/* #row1 {
   padding-top: 30px;
   margin-bottom: 30px;
-}
+} */
 
 .q {
   color: rgba(70, 70, 70, 0.884);
@@ -90,7 +90,7 @@ header {
 
 #answer {
   padding: 15px 15px 0px 15px;
-  margin: 0px 10px 0px 10px;
+  margin: 10px 10px 0px 10px;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
@@ -108,10 +108,16 @@ header {
 }
 
 .next {
-  width: 30%;
-  height: 50px;
-  margin-left: 35%;
+  margin: auto;
+  height: auto;
+  min-width: 30%;
   font-size: 25px;
+  margin-bottom: 75px;
+  /* margin-top: 25px; */
+  padding: 15px;
+  /* width: auto;
+  margin-left: 35%;
+  font-size: 25px; */
 }
 
 .start {
@@ -122,19 +128,21 @@ header {
   margin-top: 50px;
 }
 
-#row2 {
+/* #row2 {
   padding-bottom: 20px;
-}
+} */
 
 #rwt {
+  margin: 0 auto;
+  text-align: center;
   width: 85%;
-  font-size: 500%;
-  margin-bottom: 40px;
+  font-size: 300%;
+  margin-bottom: 10px;
 }
 
-#question {
+/* #question {
   margin-bottom: 20px;
-}
+} */
 
 #winrow,
 #looserow,
@@ -158,8 +166,13 @@ header {
   margin-top: 20px;
 }
 
-#row1 {
+/* #row1 {
   padding-top: 40px;
+} */
+
+.row {
+  margin: auto;
+  margin-bottom: 10px;
 }
 
 #colrigth {
