@@ -114,13 +114,7 @@ function right_wrong_timeout_answer_numbers(rwt) {
   $("#transanswer").text(transanswer);
 
   database.ref(Game.userKey + "/numbers").once("value", function(snapshot) {
-    var data = snapshot.val();
-    var totalitemsdb = 0;
-
-    for (var key in data) {
-      totalitemsdb++;
-    }
-    if (totalitemsdb + tout + wrong === Game.themes.numbers.length) {
+    if (snapshot.numChildren() + tout + wrong === Game.themes.numbers.length) {
       $(".nextn").text("Finish");
     } else {
       $(".nextn").text("Next");
@@ -135,14 +129,7 @@ function right_wrong_timeout_answer_numbers(rwt) {
 function Next_Numbers_Activity() {
   if (actualqindex === Game.themes.numbers.length - 1) {
     database.ref(Game.userKey + "/numbers").once("value", function(snapshot) {
-      var data = snapshot.val();
-      var totalitemsdb = 0;
-
-      for (var key in data) {
-        totalitemsdb++;
-      }
-
-      if (totalitemsdb === Game.themes.numbers.length) {
+      if (snapshot.numChildren() === Game.themes.numbers.length) {
         $(".startn").html("Clean Progress");
       } else {
         $(".startn").html("Start Again");
@@ -159,11 +146,9 @@ function Next_Numbers_Activity() {
     database.ref(Game.userKey + "/numbers").once("value", function(snapshot) {
       var data = snapshot.val();
       var found = false;
-      var totalitemsdb = 0;
 
       actualqindex++;
       for (var key in data) {
-        totalitemsdb++;
         if (data[key] === Game.themes.numbers[actualqindex]) {
           found = true;
         }
@@ -182,11 +167,11 @@ function Next_Numbers_Activity() {
         $("#divcentral2").fadeOut(500, function() {
           $("#divcentral1").fadeIn(500);
 
-          $("#gueswords").hide();
-          $("#guesrem")
+          $("#h3gueswords").hide();
+          $("#h3guesrem")
             .hide()
             .show(300, function() {
-              $("#gueswords").show(300);
+              $("#h3gueswords").show(300);
             });
         });
 
@@ -214,10 +199,11 @@ $(document).ready(function() {
   NumbersActivity.reset(); //////////////////////*************
 
   document.onkeyup = function(event) {
-    NumbersActivity.userkey = event.key;
+    if ($("#divcentral1").css("display") === "block" && vguesremcounter > 0) {
+      NumbersActivity.userkey = event.key;
 
-    if (NumbersActivity.validate(NumbersActivity.userkey)) {
       if (
+        NumbersActivity.validate(NumbersActivity.userkey) &&
         $("#gueswords")
           .text()
           .indexOf(NumbersActivity.userkey) === -1
@@ -233,18 +219,15 @@ $(document).ready(function() {
         if (NumbersActivity.matchesnumber === NumbersActivity.word.length) {
           right_wrong_timeout_answer_numbers("Right Answer");
         }
-        if (vguesremcounter > 0) {
-          $("#gueswords").text(
-            $("#gueswords").text() + " " + NumbersActivity.userkey
-          );
 
-          if (NumbersActivity.word.indexOf(NumbersActivity.userkey) === -1) {
-            vguesremcounter--;
-            $("#guesrem").text(vguesremcounter);
+        $("#gueswords").append(" " + NumbersActivity.userkey);
 
-            if (vguesremcounter === 0) {
-              right_wrong_timeout_answer_numbers("Wrong Answer");
-            }
+        if (NumbersActivity.word.indexOf(NumbersActivity.userkey) === -1) {
+          vguesremcounter--;
+          $("#guesrem").text(vguesremcounter);
+
+          if (vguesremcounter === 0) {
+            right_wrong_timeout_answer_numbers("Wrong Answer");
           }
         }
       }

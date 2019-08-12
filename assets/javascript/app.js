@@ -260,13 +260,7 @@ function right_wrong_timeout_answer(rwt) {
     });
 
   database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-    var data = snapshot.val();
-    var totalitemsdb = 0;
-
-    for (var key in data) {
-      totalitemsdb++;
-    }
-    if (totalitemsdb + tout + wrong === Game.themes.colors.length) {
+    if (snapshot.numChildren() + tout + wrong === Game.themes.colors.length) {
       $(".next").text("Finish");
     } else {
       $(".next").text("Next");
@@ -281,14 +275,7 @@ function right_wrong_timeout_answer(rwt) {
 function next() {
   if (actualqindex === Game.themes.colors.length - 1) {
     database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-      var data = snapshot.val();
-      var totalitemsdb = 0;
-
-      for (var key in data) {
-        totalitemsdb++;
-      }
-
-      if (totalitemsdb === Game.themes.colors.length) {
+      if (snapshot.numChildren() === Game.themes.colors.length) {
         $(".start").html("Clean Progress");
       } else {
         $(".start").html("Start Again");
@@ -305,11 +292,9 @@ function next() {
     database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
       var data = snapshot.val();
       var found = false;
-      var totalitemsdb = 0;
 
       actualqindex++;
       for (var key in data) {
-        totalitemsdb++;
         if (data[key] === Game.themes.colors[actualqindex]) {
           found = true;
         }
@@ -334,7 +319,9 @@ function next() {
             .show(300, function() {
               $("#answer2").show(300, function() {
                 $("#answer3").show(300, function() {
-                  $("#answer4").show(300);
+                  $("#answer4").show(300, function() {
+                    StopQClick = false;
+                  });
                 });
               });
             });
@@ -380,16 +367,24 @@ function timeConverter(t) {
 
   return minutes + ":" + seconds;
 }
+
+var StopQClick;
+
 $(document).ready(function() {
   // answers buttons////////////
-  $(".q").click(function() {
-    var correctans = "answer" + answerposition;
-    if ($(this).attr("id") === correctans) {
-      right_wrong_timeout_answer("Right Answer");
-      audiocorrect.play();
-    } else {
-      right_wrong_timeout_answer("Wrong Answer");
-      audiofail.play();
+  $(".q").on("click", function(event) {
+    event.preventDefault();
+
+    if (!StopQClick) {
+      StopQClick = true;
+      var correctans = "answer" + answerposition;
+      if ($(this).attr("id") === correctans) {
+        right_wrong_timeout_answer("Right Answer");
+        audiocorrect.play();
+      } else {
+        right_wrong_timeout_answer("Wrong Answer");
+        audiofail.play();
+      }
     }
   });
 
@@ -409,12 +404,15 @@ $(document).ready(function() {
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
   ////////////Home Page Begin//////////////////////////////////////////////////////////////////////////////////////////
   var LearnOrPlay;
-  $(".LearnPlay").on("click", function() {
+  $(".LearnPlay").on("click", function(even) {
+    event.preventDefault();
     LearnOrPlay = $(this).attr("id");
     $("#rownum1").css("display", "none");
     $("#rownum2").css("display", "block");
   });
-  $(".CNA").on("click", function() {
+
+  $(".CNA").on("click", function(event) {
+    event.preventDefault();
     var CNA = $(this).attr("id");
     if (LearnOrPlay === "play") {
       if (CNA === "colors") {
@@ -434,8 +432,6 @@ $(document).ready(function() {
   });
   ////////////Home Page End//////////////////////////////////////////////////////////////////////////////////////////
   ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
- 
-
 
   $("#login").on("click", function() {
     Game.AddUser(
