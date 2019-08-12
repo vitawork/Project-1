@@ -62,6 +62,7 @@ var Game = {
         Game.userName = name;
         Game.userKey = database.ref().push({ name: name }).key;
       }
+      window.location.href = "./Home.html";
     });
   },
 
@@ -207,16 +208,11 @@ function show_question_answers(index) {
       } else {
         if (Game.theme === "numbers") {
           ////////////////
-          NumbersActivity.word=transanswer;
+          NumbersActivity.word = transanswer;
           NumbersActivity.empty_word();
 
+          //***************** */
 
-
-
-        //***************** */
-
-        
-        
           ///////////////
         } else {
           ////////////////******* */
@@ -230,7 +226,7 @@ function show_question_answers(index) {
 }
 
 Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
-Game.theme="colors";//////////***********
+Game.theme = "colors"; //////////***********
 // Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
 
 function right_wrong_timeout_answer(rwt) {
@@ -342,7 +338,7 @@ function next() {
         $("#divcentral3").css("display", "none");
         $("#divcentral2").fadeOut(500, function() {
           $("#divcentral1").fadeIn(500);
-  
+
           $("#answer4").hide();
           $("#answer3").hide();
           $("#answer2").hide();
@@ -424,6 +420,42 @@ $(document).ready(function() {
   });
 
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
+  ////////////Home Page Begin//////////////////////////////////////////////////////////////////////////////////////////
+  var LearnOrPlay;
+  $(".LearnPlay").on("click", function() {
+    LearnOrPlay = $(this).attr("id");
+    $("#row1").css("display", "none");
+    $("#row2").css("display", "block");
+  });
+  $(".CNA").on("click", function() {
+    var CNA = $(this).attr("id");
+    if (LearnOrPlay === "play") {
+      if (CNA === "colors") {
+        window.location.href = "./ActivityColors.html";
+      }
+      if (CNA === "numbers") {
+        window.location.href = "./ActivityNumbers.html";
+      }
+      if (CNA === "animals") {
+        window.location.href = "./ActivityAnimals.html";
+      }
+    } else {
+      window.location.href = "./Learning.html";
+    }
+    $("#row2").css("display", "none");
+    $("#row1").css("display", "block");
+  });
+  ////////////Home Page End//////////////////////////////////////////////////////////////////////////////////////////
+   ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
+  
+   
+   $("#login").on("click",function () {
+
+     Game.AddUser($("#username").val().trim());
+     
+
+   });
+   ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
 
   //////getting the animals progress
   database.ref(Game.userKey + "/animals").on("value", function(snapshot) {
