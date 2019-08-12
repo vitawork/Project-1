@@ -80,17 +80,17 @@
             </div>
           </div>
         </div>
-        <div id="row2" class="row">
+        <div id="fila2" class="row">
           <div id="colpicture" class="col-xs-12 col-sm-6 align-middle">
-            <img id="questionimg" alt="image" />
+            <h1 id="numberimg"></h1>
           </div>
           <div id="colanswers" class="col-xs-12 col-sm-6 align-middle">
-            <h3  class="q">
+            <h3>
               <!-- //////////////////guesses remaining/////////////////////// -->
-              Guesses Remaining: <span  id="guesrem"><strong> 6</strong></span>
+              Guesses Remaining: <span id="guesrem"><strong> 6</strong></span>
             </h3>
-            <h3  class="q">
-                Guessed Letters: <span id="answer2" id="gueswords"><strong> </strong></span>
+            <h3>
+              Guessed Letters: <span id="gueswords"><strong> </strong></span>
               <!-- //////////////////already typed letters/////////////////////// -->
             </h3>
           </div>
@@ -133,7 +133,7 @@
           <h1 id="rwt">
             <!-- ///////////rigth-wrong-timeout//////////////// -->
           </h1>
-          <button type="button" class="next btn btn-secondary ">Next</button>
+          <button type="button" class="nextn btn btn-secondary ">Next</button>
         </div>
       </div>
 
@@ -143,12 +143,12 @@
         class="allmaindiv col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-2 col-lg-8"
       >
         <div id="row1" class="row">
-          <div id="winrow" class="q"><h1>0</h1></div>
-          <div id="looserow" class="q"><h1>0</h1></div>
-          <div id="timeoutrow" class="q">
+          <div id="winrow" class="qq"><h1>0</h1></div>
+          <div id="looserow" class="qq"><h1>0</h1></div>
+          <div id="timeoutrow" class="qq">
             <h1>0</h1>
           </div>
-          <button type="button" class="start btn btn-secondary align-middle">
+          <button type="button" class="startn btn btn-secondary align-middle">
             Start Again
           </button>
         </div>
@@ -161,5 +161,8 @@
     ></script>
     <script src="../javascript/app.js"></script>
     <script src="../javascript/ActivityNumbers.js"></script>
+    <script type="text/javascript">
+      // NumbersActivity.reset();
+    </script>
   </body>
 </html>
