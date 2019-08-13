@@ -161,7 +161,6 @@ function Next_Numbers_Activity() {
 
         timer = 60;
         NumbersActivity.small_reset();
-        //////////////////////////////////////////////////////kjkjnbkjnjk///////
 
         $("#divcentral3").css("display", "none");
         $("#divcentral2").fadeOut(500, function() {
@@ -193,10 +192,8 @@ function Next_Numbers_Activity() {
   }
 }
 
-//////////
-
 $(document).ready(function() {
-  NumbersActivity.reset(); //////////////////////*************
+  NumbersActivity.reset(); ///////////star the game///////////
 
   document.onkeyup = function(event) {
     if ($("#divcentral1").css("display") === "block" && vguesremcounter > 0) {
@@ -217,6 +214,7 @@ $(document).ready(function() {
           }
         }
         if (NumbersActivity.matchesnumber === NumbersActivity.word.length) {
+          audiocorrect.play();
           right_wrong_timeout_answer_numbers("Right Answer");
         }
 
@@ -227,6 +225,8 @@ $(document).ready(function() {
           $("#guesrem").text(vguesremcounter);
 
           if (vguesremcounter === 0) {
+            audiofail.play();
+
             right_wrong_timeout_answer_numbers("Wrong Answer");
           }
         }

@@ -20,7 +20,6 @@ var database = firebase.database();
 var Game = {
   userName: "",
   userKey: "",
-  theme: "",
 
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],
@@ -213,8 +212,6 @@ function show_question_answers(index) {
 }
 
 Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
-// Game.theme = "colors"; //////////***********
-// Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
 
 function right_wrong_timeout_answer(rwt) {
   clearTimeout(question_timeout);
@@ -459,9 +456,4 @@ $(document).ready(function() {
     data = snapshot.val();
     Game.FillingProgressTables(data, "numbers");
   });
-
-  // $(".card-header").on("click", function() {
-  //   //////delete, only for test******
-  //   Game.AddProgress("numbers", "seven"); //////delete, only for test********
-  // }); //////delete, only for test*******
 });
