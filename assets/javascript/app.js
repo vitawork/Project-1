@@ -75,15 +75,23 @@ var Game = {
         userkey = database.ref().push({ name: name }).key;
       }
 
+      var userlang = "es";
+
+      for (let i = 0; i < Game.langs.length; i++) {
+        if (Game.langs[i][0] === l) {
+          userlang = Game.langs[i][1];
+        }
+      }
+
       localStorage.clear();
 
       localStorage.setItem("name-user", name);
       localStorage.setItem("key-user", userkey);
-      localStorage.setItem("lang-user", l);
+      localStorage.setItem("lang-user", userlang);
 
-      this.userName = localStorage.getItem("name-user");
-      this.userKey = localStorage.getItem("key-user");
-      this.lang = localStorage.getItem("lang-user");
+      Game.userName = localStorage.getItem("name-user");
+      Game.userKey = localStorage.getItem("key-user");
+      Game.lang = localStorage.getItem("lang-user");
 
       window.location.href = "./Home.html";
     });
@@ -392,6 +400,13 @@ function timeConverter(t) {
 
   return minutes + ":" + seconds;
 }
+
+function FillingIndexSelect() {
+  for (let i = 0; i < Game.langs.length; i++) {
+    $("#lenguages").append("<option>" + Game.langs[i][0] + "</option>");
+  }
+}
+
 //////////////////////////////////////////fix/////////************** */
 // function reader() {
 //   var text = encodeURIComponent(Game.transanswer);
@@ -483,12 +498,26 @@ $(document).ready(function() {
   ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
 
   $("#login").on("click", function() {
-    Game.AddUser(
+    if (
       $("#username")
         .val()
-        .trim(),"es"
-    );
-    $("#username").val("");
+        .trim() !== "" &&
+      $("#lenguages")
+        .val()
+        .trim() !== "Languages"
+    ) {
+      Game.AddUser(
+        $("#username")
+          .val()
+          .trim(),
+        $("#lenguages")
+          .val()
+          .trim()
+      );
+
+      $("#username").val("");
+      $("#lenguages").val("Languages");
+    }
   });
   ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
 

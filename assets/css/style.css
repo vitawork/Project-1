@@ -10,6 +10,20 @@ h3 span {
   background-image: url(../images/chicos.jpeg);
 }
 
+.form-control {
+  background-color: rgba(255, 255, 255, 0);
+  color: #d1d1d1;
+  font-size: 45px;
+}
+
+option{
+  font-size: 30px;
+}
+
+.mar {
+  margin: 0px;
+}
+
 #h3gueswords {
   margin: 0.5rem 0 2rem 0;
 }

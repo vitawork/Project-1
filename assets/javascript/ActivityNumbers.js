@@ -59,7 +59,7 @@ function show_question_answers_numbers(index) {
     data: {
       key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
       source: "en",
-      target: "es",
+      target: Game.lang,
       q: text
     },
     dataType: "jsonp",
