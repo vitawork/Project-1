@@ -69,10 +69,7 @@ function show_question_answers_numbers(index) {
       );
       NumbersActivity.word = transanswer;
       NumbersActivity.empty_word();
-      $("#numberimg").html(
-        index +
-          " <img alt='icon' id='iconsn1' class='iconsound' src='assets/images/Sound-On2.png'>"
-      );
+      $("#numberimg").html(index);
 
       $("#guesrem").html("<strong> 6</strong>");
       $("#gueswords").html("<strong> </strong>");

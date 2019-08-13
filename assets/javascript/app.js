@@ -204,10 +204,7 @@ function show_question_answers(index) {
         data.data.translations[0].translatedText
       );
 
-      $("#question").html(
-        transanswer +
-          " <img alt='icon' id='iconsc1' class='iconsound' src='assets/images/Sound-On2.png'>"
-      );
+      $("#question").html(transanswer);
 
       answerposition = Math.floor(Math.random() * 4 + 1);
       for (let i = 1; i < 5; i++) {
@@ -407,29 +404,10 @@ function FillingIndexSelect() {
   }
 }
 
-//////////////////////////////////////////fix/////////************** */
-// function reader() {
-//   var text = encodeURIComponent(Game.transanswer);
-//   var url = `https://translate.google.com/translate_tts?ie=UTF-8&q="${encodeURIComponent(text)}&tl=es&client=tw-ob`;
-//   $("audio")
-//     .attr("src", url)
-//     .get(0)
-//     .play();
-// }
-
 var StopQClick;
 
+
 $(document).ready(function() {
-  // $("#question").on("click", function(e) {
-  //   e.preventDefault();
-  //   console.log("pppppp");
-  //   var text = "hola";
-  //   text= encodeURIComponent(text);
-  //   var url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=es&client=tw-ob`;
-  //   $('audio').attr('src',url).get(0).play();
-
-  // });
-
   // answers buttons////////////
   $(".q").on("click", function(event) {
     event.preventDefault();
