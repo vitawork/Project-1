@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <input type="text" name="text" />
+    <a href="#" class="say">Escuchar texto</a>
+    <audio src="" hidden class="speech"></audio>
+
+    <script>
+      $(function() {
+          $("a.say").on('click', function(e){
+              e.preventDefault();
+            var text = $("input[name=text]").val();
+            text= encodeURIComponent(text);
+            var url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=es&client=tw-ob`;
+            $('audio').attr('src',url).get(0).play();
+
+        });
+      });
+    </script>
+  </body>
+</html>

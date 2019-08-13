@@ -182,7 +182,10 @@ function show_question_answers(index) {
         data.data.translations[0].translatedText
       );
 
-      $("#question").html(transanswer);
+      $("#question").html(
+        transanswer +
+          " <img alt='icon' id='iconsc1' class='iconsound' src='assets/images/Sound-On2.png'>"
+      );
 
       answerposition = Math.floor(Math.random() * 4 + 1);
       for (let i = 1; i < 5; i++) {
