@@ -45,6 +45,57 @@ input[type="text"] {
   border-bottom: 2px solid white;
 }
 
+.index,
+.home,
+.learning,
+.animals,
+.container-fluid {
+  background-image: url(../images/chicos.jpeg);
+}
+
+#rownum2 {
+  display: none;
+}
+
+#fila2 {
+  background-color: white; /**************/
+}
+
+#numberimg{
+	font-size: 900%;
+	border: solid 10px rgb(116, 114, 114);
+	background-color: rgb(212, 245, 215);
+}
+
+nav .brand-logo {
+  font-family: "Mouse Memoirs", sans-serif;
+  font-size: 55px;
+}
+.side-nav {
+  font-family: "Mouse Memoirs", sans-serif;
+}
+.side-nav a {
+  font-size: 24px;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: white;
+}
+
+input[type="text"] {
+  font-size: 3rem;
+  text-align: center;
+  border-bottom: 2px solid white;
+}
+
+/*#input#username.validate {
+	color: white;
+}*/
+
 .card {
   font-family: "Mouse Memoirs", sans-serif;
   margin-top: 100px;

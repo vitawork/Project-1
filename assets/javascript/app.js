@@ -20,6 +20,7 @@ var database = firebase.database();
 var Game = {
   userName: "",
   userKey: "",
+  theme: "",
 
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],

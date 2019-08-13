@@ -9,18 +9,6 @@ body {
   background-image: url(../images/chicos.jpeg);
 }
 
-/* #answer1{
-  width: 70px;
-  height: 40px;
-  background-color: green
-} */
-
-/* #headerdiv {
-  border-top: solid 4px rgb(17, 17, 17);
-  border-bottom: solid 4px rgb(17, 17, 17);
-  margin-top: 15px;
-} */
-
 nav .brand-logo {
   position: absolute;
   color: #fff;
@@ -72,10 +60,6 @@ h4 {
   margin: 0;
 }
 .glow {
-  /* font-size: 40px;
-	color: #fff;
-	text-align: center; */
-  /* padding: 20px; */
   margin-bottom: 0.5rem;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   -moz-animation: glow 1s ease-in-out infinite alternate;
@@ -84,10 +68,6 @@ h4 {
 }
 
 @keyframes glow {
-  /* from {
-      text-shadow: 0 0 10px #418FDE, 0 0 20px #418FDE, 0 0 30px #418FDE, 0 0 40px #418FDE, 0 0 50px #418FDE, 0 0 60px #418FDE, 0 0 70px #418FDE;
-    } */
-
   to {
     text-shadow: 0 0 20px #c8102e, 0 0 30px #c8102e, 0 0 40px #c8102e,
       0 0 50px #c8102e, 0 0 60px #c8102e, 0 0 70px #c8102e, 0 0 80px #c8102e;
@@ -96,7 +76,6 @@ h4 {
 
 .tc {
   width: 20px;
-  /* text-align: left; */
   margin: 0 auto;
 }
 
@@ -104,11 +83,6 @@ h4 {
   margin-bottom: 15px;
   min-height: 400px;
 }
-
-/* #row1 {
-  padding-top: 30px;
-  margin-bottom: 30px;
-} */
 
 .q,
 .qq {
@@ -147,10 +121,6 @@ h4 {
   min-width: 30%;
   font-size: 25px;
   margin-bottom: 75px;
-  /* margin-top: 25px; */
-  /* width: auto;
-  margin-left: 35%;
-  font-size: 25px; */
 }
 
 .start,
@@ -162,10 +132,6 @@ h4 {
   margin-top: 50px;
 }
 
-/* #row2 {
-  padding-bottom: 20px;
-} */
-
 #rwt {
   margin: 0 auto;
   text-align: center;
@@ -173,10 +139,6 @@ h4 {
   font-size: 300%;
   margin-bottom: 10px;
 }
-
-/* #question {
-  margin-bottom: 20px;
-} */
 
 #winrow,
 #looserow,
@@ -199,10 +161,6 @@ h4 {
 #colanswers {
   margin-top: 20px;
 }
-
-/* #row1 {
-  padding-top: 40px;
-} */
 
 .row {
   margin: auto;
