@@ -72,28 +72,27 @@ h4 {
   margin: 0;
 }
 .glow {
-  /* font-size: 40px;
+	/* font-size: 40px;
 	color: #fff;
 	text-align: center; */
-  /* padding: 20px; */
-  margin-bottom: 0.5rem;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
+	/* padding: 20px; */
+	margin-bottom: .5rem;
+	-webkit-animation: glow 1s ease-in-out infinite alternate;
+	-moz-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
   animation-delay: 50s;
-}
-
-@keyframes glow {
-  /* from {
+  }
+  
+  @keyframes glow {
+    /* from {
       text-shadow: 0 0 10px #418FDE, 0 0 20px #418FDE, 0 0 30px #418FDE, 0 0 40px #418FDE, 0 0 50px #418FDE, 0 0 60px #418FDE, 0 0 70px #418FDE;
     } */
-
-  to {
-    text-shadow: 0 0 20px #c8102e, 0 0 30px #c8102e, 0 0 40px #c8102e,
-      0 0 50px #c8102e, 0 0 60px #c8102e, 0 0 70px #c8102e, 0 0 80px #c8102e;
-  }
-}
-
+    
+    to {
+      text-shadow: 0 0 20px #C8102E, 0 0 30px #C8102E, 0 0 40px #C8102E, 0 0 50px #C8102E, 0 0 60px #C8102E, 0 0 70px #C8102E, 0 0 80px #C8102E;
+    }
+    }
+  
 .tc {
   width: 20px;
   /* text-align: left; */
