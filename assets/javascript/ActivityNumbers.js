@@ -99,8 +99,8 @@ function right_wrong_timeout_answer_numbers(rwt) {
   }
 
   $("#divcentral3").css("display", "none");
-  $("#divcentral1").fadeOut(500, function() {
-    $("#divcentral2").fadeIn(500, function() {
+  $("#divcentral1, #timerrow1").fadeOut(500, function() {
+    $("#divcentral2, #timerrow2").fadeIn(500, function() {
       $("#rwt")
         .fadeOut()
         .fadeIn()
@@ -135,8 +135,9 @@ function Next_Numbers_Activity() {
         $(".startn").html("Start Again");
       }
     });
-    $("#divcentral1").css("display", "none");
-    $("#divcentral2").fadeOut(500, function() {
+
+    $("#divcentral1, #timerrow1").css("display", "none");
+    $("#divcentral2, #timerrow2").fadeOut(500, function() {
       $("#divcentral3").fadeIn(500);
     });
     $("#winrow h1").text("Correct: " + right);
@@ -163,8 +164,8 @@ function Next_Numbers_Activity() {
         NumbersActivity.small_reset();
 
         $("#divcentral3").css("display", "none");
-        $("#divcentral2").fadeOut(500, function() {
-          $("#divcentral1").fadeIn(500);
+        $("#divcentral2, #timerrow2").fadeOut(500, function() {
+          $("#divcentral1, #timerrow1").fadeIn(500);
 
           $("#h3gueswords").hide();
           $("#h3guesrem")
@@ -174,7 +175,7 @@ function Next_Numbers_Activity() {
             });
         });
 
-        $("#timerrow h4").text("00:00");
+        $("#timerrow1 h4, #timerrow2 h4").text("00:00");
         $("#winrow h4").text("  " + right);
         $("#looserow h4").text("  " + wrong);
         $("#timeoutrow h4").text("  " + tout);

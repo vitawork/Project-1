@@ -51,17 +51,27 @@ var Game = {
     database.ref().once("value", function(snapshot) {
       var found = false;
       var data = snapshot.val();
+      var userkey;
       for (var key in data) {
         var user = data[key];
         if (user.name === name) {
           found = true;
+          userkey = key;
           break;
         }
       }
       if (!found) {
-        Game.userName = name;
-        Game.userKey = database.ref().push({ name: name }).key;
+        userkey = database.ref().push({ name: name }).key;
       }
+
+      localStorage.clear();
+
+      localStorage.setItem("name-user", name);
+      localStorage.setItem("key-user", userkey);
+
+      this.userName = localStorage.getItem("name-user");
+      this.userKey = localStorage.getItem("key-user");
+
       window.location.href = "./Home.html";
     });
   },
@@ -117,6 +127,9 @@ var Game = {
   }
   ////////Here add game  funtions***************
 };
+
+Game.userName = localStorage.getItem("name-user");
+Game.userKey = localStorage.getItem("key-user");
 
 ////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
 
@@ -211,8 +224,6 @@ function show_question_answers(index) {
   });
 }
 
-Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
-
 function right_wrong_timeout_answer(rwt) {
   clearTimeout(question_timeout);
   clearInterval(intervalId);
@@ -232,8 +243,8 @@ function right_wrong_timeout_answer(rwt) {
   }
 
   $("#divcentral3").css("display", "none");
-  $("#divcentral1").fadeOut(500, function() {
-    $("#divcentral2").fadeIn(500, function() {
+  $("#divcentral1, #timerrow1").fadeOut(500, function() {
+    $("#divcentral2, #timerrow2").fadeIn(500, function() {
       $("#rwt")
         .fadeOut()
         .fadeIn()
@@ -278,8 +289,8 @@ function next() {
         $(".start").html("Start Again");
       }
     });
-    $("#divcentral1").css("display", "none");
-    $("#divcentral2").fadeOut(500, function() {
+    $("#divcentral1, #timerrow1").css("display", "none");
+    $("#divcentral2, #timerrow2").fadeOut(500, function() {
       $("#divcentral3").fadeIn(500);
     });
     $("#winrow h1").text("Correct: " + right);
@@ -305,8 +316,8 @@ function next() {
         timer = 60;
 
         $("#divcentral3").css("display", "none");
-        $("#divcentral2").fadeOut(500, function() {
-          $("#divcentral1").fadeIn(500);
+        $("#divcentral2, #timerrow2").fadeOut(500, function() {
+          $("#divcentral1, #timerrow1").fadeIn(500);
 
           $("#answer4").hide();
           $("#answer3").hide();
@@ -324,7 +335,7 @@ function next() {
             });
         });
 
-        $("#timerrow h4").text("00:00");
+        $("#timerrow1 h4, #timerrow2 h4").text("00:00");
         $("#winrow h4").text("  " + right);
         $("#looserow h4").text("  " + wrong);
         $("#timeoutrow h4").text("  " + tout);
@@ -345,7 +356,7 @@ function next() {
 function count() {
   timer--;
   var converted = timeConverter(timer);
-  $("#timerrow h4").text(converted);
+  $("#timerrow1 h4, #timerrow2 h4").text(converted);
 }
 
 function timeConverter(t) {
@@ -403,9 +414,14 @@ $(document).ready(function() {
   var LearnOrPlay;
   $(".LearnPlay").on("click", function(even) {
     event.preventDefault();
-    LearnOrPlay = $(this).attr("id");
-    $("#rownum1").css("display", "none");
-    $("#rownum2").css("display", "block");
+
+    if ($(this).attr("id") === "progress") {
+      window.location.href = "./Progress.html";
+    } else {
+      LearnOrPlay = $(this).attr("id");
+      $("#rownum1").css("display", "none");
+      $("#rownum2").css("display", "block");
+    }
   });
 
   $(".CNA").on("click", function(event) {
@@ -436,6 +452,7 @@ $(document).ready(function() {
         .val()
         .trim()
     );
+    $("#username").val("");
   });
   ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
 

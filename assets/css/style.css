@@ -1,5 +1,5 @@
 h3 span {
-  color: rgb(90, 22, 34);
+  color: rgb(252, 6, 51);
 }
 
 .index,
@@ -10,14 +10,23 @@ h3 span {
   background-image: url(../images/chicos.jpeg);
 }
 
+#h3gueswords {
+  margin: 0.5rem 0 2rem 0;
+}
+
 #rownum2 {
   display: none;
 }
 
+#rownum1,
+#rownum2 {
+  margin-top: 175px;
+}
+
 #numberimg {
   font-size: 900%;
-  border: solid 10px rgb(116, 114, 114);
-  background-color: rgb(212, 245, 215);
+  border: solid 10px #2bbbad;
+  background-color: rgba(203, 206, 203, 0.5);
 }
 
 nav .brand-logo {
@@ -47,7 +56,7 @@ input[type="text"] {
 
 .card {
   font-family: "Mouse Memoirs", sans-serif;
-  margin-top: 100px;
+  margin-top: 25px;
 }
 
 .input-field label {
@@ -65,10 +74,25 @@ input[type="text"] {
 
 .btn-large {
   font-family: "Mouse Memoirs", sans-serif;
-  font-size: 2rem;
+  font-size: 3.5rem;
+  margin: 10px;
 }
 
 .btn {
   font-size: 30px;
   margin-bottom: 20px;
+}
+
+#rownum1,
+#rownum2 {
+  margin-top: 175px;
+}
+
+.card-header {
+  font-size: 2.5rem;
+  background-color: #2bbbad;
+}
+
+.card-body1 {
+  font-size: 1.5rem;
 }

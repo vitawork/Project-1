@@ -9,6 +9,15 @@
     <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-database.js"></script>
 
+    <link
+      href="http://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Mouse+Memoirs&display=swap"
+      rel="stylesheet"
+    />
+
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -19,14 +28,6 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
-    />
-    <link
-      href="http://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Mouse+Memoirs&display=swap"
-      rel="stylesheet"
     />
     <link
       rel="stylesheet"
@@ -55,25 +56,25 @@
   <body>
     <nav>
       <div class="nav-wrapper #4db6ac teal lighten-2">
-        <a href="#!" class="brand-logo center">TYPE THE NUMBER</a>
+        <a href="#!" class="brand-logo center">CHOOSE THE COLOR</a>
       </div>
     </nav>
     <div class="container-fluid">
       <!-- playind div -->
+      <div id="timerrow1">
+        <h4 class="glow">00:00</h4>
+      </div>
+      <div id="timerrow2">
+        <h4>00:00</h4>
+      </div>
       <div
         id="divcentral1"
         class="allmaindiv col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-2 col-lg-8"
       >
-        <div id="timerrow">
-          <h4 class="glow">00:00</h4>
-        </div>
         <div id="row1" class="row">
-          <div
-            id="colleft"
-            class="col-xs-12 col-sm-offset-1 col-sm-10 text-center"
-          >
+          <div id="colleft" class="col-xs-12 col-sm-offset-1 col-sm-10">
             <!-- questions col -->
-            <h1 id="word">
+            <h1 id="question">
               <!-- //////////////////question/////////////////////// -->
             </h1>
           </div>
@@ -92,18 +93,22 @@
             </div>
           </div>
         </div>
-        <div id="fila2" class="row">
-          <div id="colpicture" class="col-xs-12 col-sm-6 align-middle">
-            <h1 id="numberimg"></h1>
-          </div>
-          <div id="colanswers" class="col-xs-12 col-sm-6 align-middle">
-            <h3 id="h3guesrem">
-              <!-- //////////////////guesses remaining/////////////////////// -->
-              Guesses Remaining: <span id="guesrem"><strong> 6</strong></span>
+        <div id="row2" class="row">
+          <!-- colors picture -->
+          <div id="colpictureleft" class="col-xs-6 col-sm-6 align-middle">
+            <h3 id="answer1" class="q">
+              <!-- //////////////////answer1/////////////////////// -->
             </h3>
-            <h3 id="h3gueswords">
-              Guessed Letters: <span id="gueswords"><strong> </strong></span>
-              <!-- //////////////////already typed letters/////////////////////// -->
+            <h3 id="answer2" class="q">
+              <!-- ///////////////////answer2////////////////////// -->
+            </h3>
+          </div>
+          <div id="colpictureright" class="col-xs-6 col-sm-6 align-middle">
+            <h3 id="answer3" class="q">
+              <!-- ////////////////////answer3///////////////////// -->
+            </h3>
+            <h3 id="answer4" class="q">
+              <!-- ////////////////////answer4///////////////////// -->
             </h3>
           </div>
         </div>
@@ -113,11 +118,8 @@
         id="divcentral2"
         class="allmaindiv col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-2 col-lg-8"
       >
-        <div id="timerrow">
-          <h4>00:00</h4>
-        </div>
         <div id="row1" class="row">
-          <div id="colleft" class="col-xs-12  col-sm-8">
+          <div id="colleft" class="col-xs-12  col-sm-6">
             <!-- rigth answer -->
             <h5 id="answer">
               <h1 id="transanswer">
@@ -145,7 +147,7 @@
           <h1 id="rwt">
             <!-- ///////////rigth-wrong-timeout//////////////// -->
           </h1>
-          <button type="button" class="nextn btn btn-secondary ">Next</button>
+          <button type="button" class="next btn btn-secondary ">Next</button>
         </div>
       </div>
 
@@ -160,7 +162,7 @@
           <div id="timeoutrow" class="qq">
             <h1>0</h1>
           </div>
-          <button type="button" class="startn btn btn-secondary align-middle">
+          <button type="button" class="start btn btn-secondary align-middle">
             Start Again
           </button>
         </div>
@@ -172,9 +174,8 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
     ></script>
     <script src="../javascript/app.js"></script>
-    <script src="../javascript/ActivityNumbers.js"></script>
     <script type="text/javascript">
-      // NumbersActivity.reset();
+      Reset_Colors_Activity();
     </script>
   </body>
 </html>
