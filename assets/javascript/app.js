@@ -20,6 +20,17 @@ var database = firebase.database();
 var Game = {
   userName: "",
   userKey: "",
+  lang: "",
+  langs: [
+    ["Spanish", "es"],
+    ["French", "fr"],
+    ["Arabic", "ar"],
+    ["Dutch", "nl"],
+    ["Japanese", "ja"],
+    ["Russian", "ru"],
+    ["Italian", "it"],
+    ["Hindi", "hi"]
+  ],
 
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],
@@ -47,7 +58,7 @@ var Game = {
     ]
   },
 
-  AddUser(name) {
+  AddUser(name, l) {
     database.ref().once("value", function(snapshot) {
       var found = false;
       var data = snapshot.val();
@@ -68,9 +79,11 @@ var Game = {
 
       localStorage.setItem("name-user", name);
       localStorage.setItem("key-user", userkey);
+      localStorage.setItem("lang-user", l);
 
       this.userName = localStorage.getItem("name-user");
       this.userKey = localStorage.getItem("key-user");
+      this.lang = localStorage.getItem("lang-user");
 
       window.location.href = "./Home.html";
     });
@@ -130,6 +143,7 @@ var Game = {
 
 Game.userName = localStorage.getItem("name-user");
 Game.userKey = localStorage.getItem("key-user");
+Game.lang = localStorage.getItem("lang-user");
 
 ////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
 
@@ -173,7 +187,7 @@ function show_question_answers(index) {
     data: {
       key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
       source: "en",
-      target: "es",
+      target: Game.lang,
       q: text
     },
     dataType: "jsonp",
@@ -378,10 +392,29 @@ function timeConverter(t) {
 
   return minutes + ":" + seconds;
 }
+//////////////////////////////////////////fix/////////************** */
+// function reader() {
+//   var text = encodeURIComponent(Game.transanswer);
+//   var url = `https://translate.google.com/translate_tts?ie=UTF-8&q="${encodeURIComponent(text)}&tl=es&client=tw-ob`;
+//   $("audio")
+//     .attr("src", url)
+//     .get(0)
+//     .play();
+// }
 
 var StopQClick;
 
 $(document).ready(function() {
+  // $("#question").on("click", function(e) {
+  //   e.preventDefault();
+  //   console.log("pppppp");
+  //   var text = "hola";
+  //   text= encodeURIComponent(text);
+  //   var url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=es&client=tw-ob`;
+  //   $('audio').attr('src',url).get(0).play();
+
+  // });
+
   // answers buttons////////////
   $(".q").on("click", function(event) {
     event.preventDefault();
@@ -453,7 +486,7 @@ $(document).ready(function() {
     Game.AddUser(
       $("#username")
         .val()
-        .trim()
+        .trim(),"es"
     );
     $("#username").val("");
   });
