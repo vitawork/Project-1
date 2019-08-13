@@ -20,6 +20,7 @@ var database = firebase.database();
 var Game = {
   userName: "",
   userKey: "",
+  theme: "",
 
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],
@@ -61,6 +62,7 @@ var Game = {
         Game.userName = name;
         Game.userKey = database.ref().push({ name: name }).key;
       }
+      window.location.href = "./Home.html";
     });
   },
 
@@ -116,57 +118,59 @@ var Game = {
   ////////Here add game  funtions***************
 };
 
-$(document).ready(function() {
-  ////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
+////////////Colors Activities Begin//////////////////////////////////////////////////////////////////////////////////////////
 
-  var timer = 60;
-  var right = 0;
-  var wrong = 0;
-  var tout = 0;
-  var actualqindex = -1;
-  var answerposition = -1;
-  var transanswer = "";
+var timer = 60;
+var right = 0;
+var wrong = 0;
+var tout = 0;
+var actualqindex = -1;
+var answerposition = -1;
+var transanswer = "";
 
-  var next_timeout;
-  var question_timeout;
-  var intervalId;
+var next_timeout;
+var question_timeout;
+var intervalId;
 
-  function First_to_UpperCase(word) {
-    var w = "";
+function First_to_UpperCase(word) {
+  var w = "";
 
-    w = w + word[0].toUpperCase();
-    for (let i = 1; i < word.length; i++) {
-      w = w + word[i];
-    }
-    return w;
+  w = w + word[0].toUpperCase();
+  for (let i = 1; i < word.length; i++) {
+    w = w + word[i];
   }
+  return w;
+}
 
-  function Reset_Colors_Activity() {
-    right = 0;
-    wrong = 0;
-    tout = 0;
-    actualqindex = -1;
-    answerposition = -1;
-    transanswer = "";
-    next();
-  }
+function Reset_Colors_Activity() {
+  right = 0;
+  wrong = 0;
+  tout = 0;
+  actualqindex = -1;
+  answerposition = -1;
+  transanswer = "";
+  next();
+}
 
-  function show_question_answers(index) {
-    var text = Game.themes.colors[index];
-    $.ajax({
-      type: "GET",
-      url: "https://www.googleapis.com/language/translate/v2",
-      data: {
-        key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
-        source: "en",
-        target: "es",
-        q: text
-      },
-      dataType: "jsonp",
-      success: function(data) {
-        transanswer = First_to_UpperCase(
-          data.data.translations[0].translatedText
-        );
+function show_question_answers(index) {
+  var text = Game.themes.colors[index];
+  $.ajax({
+    type: "GET",
+    url: "https://www.googleapis.com/language/translate/v2",
+    data: {
+      key: "AIzaSyAA-XZRJ85U6jZ6KPWn21pLiwaNRBFDTQo",
+      source: "en",
+      target: "es",
+      q: text
+    },
+    dataType: "jsonp",
+    success: function(data) {
+      transanswer = First_to_UpperCase(
+        data.data.translations[0].translatedText
+      );
+
+      ////////////
+      if (Game.theme === "colors") {
         $("#question").html(transanswer);
 
         answerposition = Math.floor(Math.random() * 4 + 1);
@@ -201,59 +205,94 @@ $(document).ready(function() {
               });
           }
         }
-      },
-      error: function(data) {
-        alert("Translate API has failed");
+      } else {
+        if (Game.theme === "numbers") {
+          ////////////////
+          NumbersActivity.word = transanswer;
+          NumbersActivity.empty_word();
+
+          //***************** */
+
+          ///////////////
+        } else {
+          ////////////////******* */
+        }
       }
-    });
+    },
+    error: function(data) {
+      alert("Translate API has failed");
+    }
+  });
+}
+
+Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
+Game.theme = "colors"; //////////***********
+// Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
+
+function right_wrong_timeout_answer(rwt) {
+  clearTimeout(question_timeout);
+  clearInterval(intervalId);
+
+  if (rwt === "Right Answer") {
+    right++;
+    Game.AddProgress("colors", Game.themes.colors[actualqindex]);
+    $("#winrow h4").text("  " + right);
+  } else {
+    if (rwt === "Wrong Answer") {
+      wrong++;
+      $("#looserow h4").text("  " + wrong);
+    } else {
+      tout++;
+      $("#timeoutrow h4").text("  " + tout);
+    }
   }
 
-  Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
-  Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
-
-  function right_wrong_timeout_answer(rwt) {
-    clearTimeout(question_timeout);
-    clearInterval(intervalId);
-
-    if (rwt === "Right Answer") {
-      right++;
-      Game.AddProgress("colors", Game.themes.colors[actualqindex]);
-      $("#winrow h4").text("  " + right);
-    } else {
-      if (rwt === "Wrong Answer") {
-        wrong++;
-        $("#looserow h4").text("  " + wrong);
-      } else {
-        tout++;
-        $("#timeoutrow h4").text("  " + tout);
-      }
-    }
-
-    $("#divcentral3").css("display", "none");
-    $("#divcentral1").fadeOut(500, function() {
-      $("#divcentral2").fadeIn(500, function() {
-        $("#rwt")
-          .fadeOut()
-          .fadeIn()
-          .fadeOut()
-          .fadeIn();
-      });
+  $("#divcentral3").css("display", "none");
+  $("#divcentral1").fadeOut(500, function() {
+    $("#divcentral2").fadeIn(500, function() {
+      $("#rwt")
+        .fadeOut()
+        .fadeIn()
+        .fadeOut()
+        .fadeIn();
     });
-    $("#rwt").text(rwt);
+  });
+  $("#rwt").text(rwt);
 
-    $("#answer")
-      .text("Answer: ")
-      .css({
-        "background-color": Game.themes.colors[actualqindex],
-        opacity: "0.85"
-      });
-    $("#transanswer")
-      .text(transanswer)
-      .css({
-        "background-color": Game.themes.colors[actualqindex],
-        opacity: "0.85"
-      });
+  $("#answer")
+    .text("Answer: ")
+    .css({
+      "background-color": Game.themes.colors[actualqindex],
+      opacity: "0.85"
+    });
+  $("#transanswer")
+    .text(transanswer)
+    .css({
+      "background-color": Game.themes.colors[actualqindex],
+      opacity: "0.85"
+    });
 
+  database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
+    var data = snapshot.val();
+    var totalitemsdb = 0;
+
+    for (var key in data) {
+      totalitemsdb++;
+    }
+    if (totalitemsdb + tout + wrong === Game.themes.colors.length) {
+      $(".next").text("Finish");
+    } else {
+      $(".next").text("Next");
+    }
+  });
+
+  next_timeout = setTimeout(function() {
+    next();
+  }, 6000);
+}
+
+function next() {
+  if (actualqindex === Game.themes.colors.length - 1) {
     database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
       var data = snapshot.val();
       var totalitemsdb = 0;
@@ -261,121 +300,100 @@ $(document).ready(function() {
       for (var key in data) {
         totalitemsdb++;
       }
-      if (totalitemsdb + tout + wrong === Game.themes.colors.length) {
-        $(".next").text("Finish");
+
+      if (totalitemsdb === Game.themes.colors.length) {
+        $(".start").html("Clean Progress");
       } else {
-        $(".next").text("Next");
+        $(".start").html("Start Again");
       }
     });
+    $("#divcentral1").css("display", "none");
+    $("#divcentral2").fadeOut(500, function() {
+      $("#divcentral3").fadeIn(500);
+    });
+    $("#winrow h1").text("Correct: " + right);
+    $("#looserow h1").text("Wrong: " + wrong);
+    $("#timeoutrow h1").text("Time Out: " + tout);
+  } else {
+    database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
+      var data = snapshot.val();
+      var found = false;
+      var totalitemsdb = 0;
 
-    next_timeout = setTimeout(function() {
-      next();
-    }, 6000);
-  }
-
-  function next() {
-    if (actualqindex === Game.themes.colors.length - 1) {
-      database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-        var data = snapshot.val();
-        var totalitemsdb = 0;
-
-        for (var key in data) {
-          totalitemsdb++;
+      actualqindex++;
+      for (var key in data) {
+        totalitemsdb++;
+        if (data[key] === Game.themes.colors[actualqindex]) {
+          found = true;
         }
+      }
 
-        if (totalitemsdb === Game.themes.colors.length) {
-          $(".start").html("Clean Progress");
-        } else {
-          $(".start").html("Start Again");
-        }
-      });
-      $("#divcentral1").css("display", "none");
-      $("#divcentral2").fadeOut(500, function() {
-        $("#divcentral3").fadeIn(500);
-      });
-      $("#winrow h1").text("Correct: " + right);
-      $("#looserow h1").text("Wrong: " + wrong);
-      $("#timeoutrow h1").text("Time Out: " + tout);
-    } else {
-      database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-        var data = snapshot.val();
-        var found = false;
-        var totalitemsdb = 0;
+      if (found) {
+        next();
+      } else {
+        $(".next").text("Next");
 
-        actualqindex++;
-        for (var key in data) {
-          totalitemsdb++;
-          if (data[key] === Game.themes.colors[actualqindex]) {
-            found = true;
-          }
-        }
+        timer = 60;
 
-        if (found) {
-          next();
-        } else {
-          $(".next").text("Next");
+        $("#divcentral3").css("display", "none");
+        $("#divcentral2").fadeOut(500, function() {
+          $("#divcentral1").fadeIn(500);
 
-          timer = 60;
-
-          $("#divcentral3").css("display", "none");
-          $("#divcentral2").fadeOut(500, function() {
-            $("#divcentral1").fadeIn(500);
-
-            $("#answer4").hide();
-            $("#answer3").hide();
-            $("#answer2").hide();
-            $("#answer1")
-              .hide()
-              .show(300, function() {
-                $("#answer2").show(300, function() {
-                  $("#answer3").show(300, function() {
-                    $("#answer4").show(300);
-                  });
+          $("#answer4").hide();
+          $("#answer3").hide();
+          $("#answer2").hide();
+          $("#answer1")
+            .hide()
+            .show(300, function() {
+              $("#answer2").show(300, function() {
+                $("#answer3").show(300, function() {
+                  $("#answer4").show(300);
                 });
               });
-          });
+            });
+        });
 
-          $("#timerrow h4").text("00:00");
-          $("#winrow h4").text("  " + right);
-          $("#looserow h4").text("  " + wrong);
-          $("#timeoutrow h4").text("  " + tout);
+        $("#timerrow h4").text("00:00");
+        $("#winrow h4").text("  " + right);
+        $("#looserow h4").text("  " + wrong);
+        $("#timeoutrow h4").text("  " + tout);
 
-          show_question_answers(actualqindex);
-          intervalId = setInterval(count, 1000);
+        show_question_answers(actualqindex);
+        intervalId = setInterval(count, 1000);
 
-          question_timeout = setTimeout(function() {
-            clearInterval(intervalId);
-            audiofail.play();
-            right_wrong_timeout_answer("Time Out");
-          }, 1000 * timer);
-        }
-      });
-    }
+        question_timeout = setTimeout(function() {
+          clearInterval(intervalId);
+          audiofail.play();
+          right_wrong_timeout_answer("Time Out");
+        }, 1000 * timer);
+      }
+    });
+  }
+}
+
+function count() {
+  timer--;
+  var converted = timeConverter(timer);
+  $("#timerrow h4").text(converted);
+}
+
+function timeConverter(t) {
+  var minutes = Math.floor(t / 60);
+  var seconds = t - minutes * 60;
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
   }
 
-  function count() {
-    timer--;
-    var converted = timeConverter(timer);
-    $("#timerrow h4").text(converted);
+  if (minutes === 0) {
+    minutes = "00";
+  } else if (minutes < 10) {
+    minutes = "0" + minutes;
   }
 
-  function timeConverter(t) {
-    var minutes = Math.floor(t / 60);
-    var seconds = t - minutes * 60;
-
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-
-    if (minutes === 0) {
-      minutes = "00";
-    } else if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-
-    return minutes + ":" + seconds;
-  }
-
+  return minutes + ":" + seconds;
+}
+$(document).ready(function() {
   // answers buttons////////////
   $(".q").click(function() {
     var correctans = "answer" + answerposition;
@@ -402,6 +420,42 @@ $(document).ready(function() {
   });
 
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
+  ////////////Home Page Begin//////////////////////////////////////////////////////////////////////////////////////////
+  var LearnOrPlay;
+  $(".LearnPlay").on("click", function() {
+    LearnOrPlay = $(this).attr("id");
+    $("#row1").css("display", "none");
+    $("#row2").css("display", "block");
+  });
+  $(".CNA").on("click", function() {
+    var CNA = $(this).attr("id");
+    if (LearnOrPlay === "play") {
+      if (CNA === "colors") {
+        window.location.href = "./ActivityColors.html";
+      }
+      if (CNA === "numbers") {
+        window.location.href = "./ActivityNumbers.html";
+      }
+      if (CNA === "animals") {
+        window.location.href = "./ActivityAnimals.html";
+      }
+    } else {
+      window.location.href = "./Learning.html";
+    }
+    $("#row2").css("display", "none");
+    $("#row1").css("display", "block");
+  });
+  ////////////Home Page End//////////////////////////////////////////////////////////////////////////////////////////
+   ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
+  
+   
+   $("#login").on("click",function () {
+
+     Game.AddUser($("#username").val().trim());
+     
+
+   });
+   ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
 
   //////getting the animals progress
   database.ref(Game.userKey + "/animals").on("value", function(snapshot) {
@@ -427,8 +481,4 @@ $(document).ready(function() {
   //   //////delete, only for test******
   //   Game.AddProgress("numbers", "seven"); //////delete, only for test********
   // }); //////delete, only for test*******
-});
-$(".button-collapse").sideNav({
-    menuWidth: 300,
-    edge: 'left',
 });

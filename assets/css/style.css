@@ -5,6 +5,7 @@ nav .brand-logo{
     font-family: 'Mouse Memoirs', sans-serif;
     font-size: 55px;
  }
+
  .side-nav{
 	font-family: 'Mouse Memoirs', sans-serif;
 	
@@ -52,3 +53,15 @@ input[type=text] {
 	font-size: 30px;
     margin-bottom: 20px
 }
+
+h3 span {
+	color: rgb(90, 22, 34);
+  }
+
+#row2{
+	display: none;
+  }
+
+  #row1{ 
+	  height: 400px;
+  }
