@@ -20,7 +20,6 @@ var database = firebase.database();
 var Game = {
   userName: "",
   userKey: "",
-  theme: "",
 
   themes: {
     animals: ["Pig", "Dog", "Cat", "Lizard", "Butterfly", "Cow", "Horse"],
@@ -35,6 +34,7 @@ var Game = {
       "Yellow"
     ],
     numbers: [
+      "Zero",
       "One",
       "Two",
       "Three",
@@ -169,53 +169,39 @@ function show_question_answers(index) {
         data.data.translations[0].translatedText
       );
 
-      ////////////
-      if (Game.theme === "colors") {
-        $("#question").html(transanswer);
+      $("#question").html(transanswer);
 
-        answerposition = Math.floor(Math.random() * 4 + 1);
-        for (let i = 1; i < 5; i++) {
-          $("#answer" + i).html("");
-        }
+      answerposition = Math.floor(Math.random() * 4 + 1);
+      for (let i = 1; i < 5; i++) {
+        $("#answer" + i).html("");
+      }
 
-        for (let i = 1; i < 5; i++) {
-          if (i === answerposition) {
-            $("#answer" + i)
-              .html(Game.themes.colors[index])
-              .css({
-                "background-color": Game.themes.colors[index],
-                opacity: "0.85"
-              });
-          } else {
-            var j = Math.floor(Math.random() * Game.themes.colors.length);
-            while (
-              $("#answer1").html() === Game.themes.colors[j] ||
-              $("#answer2").html() === Game.themes.colors[j] ||
-              $("#answer3").html() === Game.themes.colors[j] ||
-              $("#answer4").html() === Game.themes.colors[j] ||
-              index === j
-            ) {
-              j = Math.floor(Math.random() * Game.themes.colors.length);
-            }
-            $("#answer" + i)
-              .html(Game.themes.colors[j])
-              .css({
-                "background-color": Game.themes.colors[j],
-                opacity: "0.85"
-              });
-          }
-        }
-      } else {
-        if (Game.theme === "numbers") {
-          ////////////////
-          NumbersActivity.word = transanswer;
-          NumbersActivity.empty_word();
-
-          //***************** */
-
-          ///////////////
+      for (let i = 1; i < 5; i++) {
+        $("#answer" + i).css("display", "block");
+        if (i === answerposition) {
+          $("#answer" + i)
+            .html(Game.themes.colors[index])
+            .css({
+              "background-color": Game.themes.colors[index],
+              opacity: "0.85"
+            });
         } else {
-          ////////////////******* */
+          var j = Math.floor(Math.random() * Game.themes.colors.length);
+          while (
+            $("#answer1").html() === Game.themes.colors[j] ||
+            $("#answer2").html() === Game.themes.colors[j] ||
+            $("#answer3").html() === Game.themes.colors[j] ||
+            $("#answer4").html() === Game.themes.colors[j] ||
+            index === j
+          ) {
+            j = Math.floor(Math.random() * Game.themes.colors.length);
+          }
+          $("#answer" + i)
+            .html(Game.themes.colors[j])
+            .css({
+              "background-color": Game.themes.colors[j],
+              opacity: "0.85"
+            });
         }
       }
     },
@@ -226,7 +212,7 @@ function show_question_answers(index) {
 }
 
 Game.userKey = "-LlcLojSZqZc--9lQThG"; //////delete, only for test**********
-Game.theme = "colors"; //////////***********
+// Game.theme = "colors"; //////////***********
 // Reset_Colors_Activity(); ///////reseating to start, this is the way to star the whole activity************************
 
 function right_wrong_timeout_answer(rwt) {
@@ -273,13 +259,7 @@ function right_wrong_timeout_answer(rwt) {
     });
 
   database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-    var data = snapshot.val();
-    var totalitemsdb = 0;
-
-    for (var key in data) {
-      totalitemsdb++;
-    }
-    if (totalitemsdb + tout + wrong === Game.themes.colors.length) {
+    if (snapshot.numChildren() + tout + wrong === Game.themes.colors.length) {
       $(".next").text("Finish");
     } else {
       $(".next").text("Next");
@@ -294,14 +274,7 @@ function right_wrong_timeout_answer(rwt) {
 function next() {
   if (actualqindex === Game.themes.colors.length - 1) {
     database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
-      var data = snapshot.val();
-      var totalitemsdb = 0;
-
-      for (var key in data) {
-        totalitemsdb++;
-      }
-
-      if (totalitemsdb === Game.themes.colors.length) {
+      if (snapshot.numChildren() === Game.themes.colors.length) {
         $(".start").html("Clean Progress");
       } else {
         $(".start").html("Start Again");
@@ -318,11 +291,9 @@ function next() {
     database.ref(Game.userKey + "/colors").once("value", function(snapshot) {
       var data = snapshot.val();
       var found = false;
-      var totalitemsdb = 0;
 
       actualqindex++;
       for (var key in data) {
-        totalitemsdb++;
         if (data[key] === Game.themes.colors[actualqindex]) {
           found = true;
         }
@@ -347,7 +318,9 @@ function next() {
             .show(300, function() {
               $("#answer2").show(300, function() {
                 $("#answer3").show(300, function() {
-                  $("#answer4").show(300);
+                  $("#answer4").show(300, function() {
+                    StopQClick = false;
+                  });
                 });
               });
             });
@@ -393,16 +366,24 @@ function timeConverter(t) {
 
   return minutes + ":" + seconds;
 }
+
+var StopQClick;
+
 $(document).ready(function() {
   // answers buttons////////////
-  $(".q").click(function() {
-    var correctans = "answer" + answerposition;
-    if ($(this).attr("id") === correctans) {
-      right_wrong_timeout_answer("Right Answer");
-      audiocorrect.play();
-    } else {
-      right_wrong_timeout_answer("Wrong Answer");
-      audiofail.play();
+  $(".q").on("click", function(event) {
+    event.preventDefault();
+
+    if (!StopQClick) {
+      StopQClick = true;
+      var correctans = "answer" + answerposition;
+      if ($(this).attr("id") === correctans) {
+        right_wrong_timeout_answer("Right Answer");
+        audiocorrect.play();
+      } else {
+        right_wrong_timeout_answer("Wrong Answer");
+        audiofail.play();
+      }
     }
   });
 
@@ -422,12 +403,15 @@ $(document).ready(function() {
   ////////////Colors Activities End//////////////////////////////////////////////////////////////////////////////////////////
   ////////////Home Page Begin//////////////////////////////////////////////////////////////////////////////////////////
   var LearnOrPlay;
-  $(".LearnPlay").on("click", function() {
+  $(".LearnPlay").on("click", function(even) {
+    event.preventDefault();
     LearnOrPlay = $(this).attr("id");
-    $("#row1").css("display", "none");
-    $("#row2").css("display", "block");
+    $("#rownum1").css("display", "none");
+    $("#rownum2").css("display", "block");
   });
-  $(".CNA").on("click", function() {
+
+  $(".CNA").on("click", function(event) {
+    event.preventDefault();
     var CNA = $(this).attr("id");
     if (LearnOrPlay === "play") {
       if (CNA === "colors") {
@@ -442,20 +426,20 @@ $(document).ready(function() {
     } else {
       window.location.href = "./Learning.html";
     }
-    $("#row2").css("display", "none");
-    $("#row1").css("display", "block");
+    $("#rownum2").css("display", "none");
+    $("#rownum1").css("display", "block");
   });
   ////////////Home Page End//////////////////////////////////////////////////////////////////////////////////////////
-   ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
-  
-   
-   $("#login").on("click",function () {
+  ////////////Index Begin//////////////////////////////////////////////////////////////////////////////////////////
 
-     Game.AddUser($("#username").val().trim());
-     
-
-   });
-   ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
+  $("#login").on("click", function() {
+    Game.AddUser(
+      $("#username")
+        .val()
+        .trim()
+    );
+  });
+  ////////////Index End//////////////////////////////////////////////////////////////////////////////////////////
 
   //////getting the animals progress
   database.ref(Game.userKey + "/animals").on("value", function(snapshot) {
@@ -474,8 +458,6 @@ $(document).ready(function() {
     data = snapshot.val();
     Game.FillingProgressTables(data, "numbers");
   });
-
-  // Game.AddUser("Gordon");////************
 
   // $(".card-header").on("click", function() {
   //   //////delete, only for test******

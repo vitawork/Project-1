@@ -1,13 +1,19 @@
 * {
-  font-family: 'Mouse Memoirs', sans-serif;
+  font-family: "Mouse Memoirs", sans-serif;
   text-align: center;
   margin: 0 auto;
   color: rgba(70, 70, 70, 0.884);
 }
 
-body{
+body {
   background-image: url(../images/chicos.jpeg);
 }
+
+/* #answer1{
+  width: 70px;
+  height: 40px;
+  background-color: green
+} */
 
 /* #headerdiv {
   border-top: solid 4px rgb(17, 17, 17);
@@ -103,7 +109,8 @@ h4 {
   margin-bottom: 30px;
 } */
 
-.q {
+.q,
+.qq {
   color: rgba(70, 70, 70, 0.884);
   width: 85%;
   padding: 10px;
@@ -126,12 +133,14 @@ h4 {
   border-bottom-right-radius: 7px;
 }
 
-.q:hover {
+.q:hover,
+.qq:hover {
   background: rgb(15, 111, 126);
   color: azure;
 }
 
-.next {
+.next,
+.nextn {
   margin: auto;
   height: auto;
   min-width: 30%;
@@ -143,7 +152,8 @@ h4 {
   font-size: 25px; */
 }
 
-.start {
+.start,
+.startn {
   margin: 0 auto;
   min-width: 30%;
   height: 150%;
@@ -224,6 +234,6 @@ h3 {
   background: rgba(255, 255, 255, 0.75);
 }
 
-#colpictureright{
+#colpictureright {
   margin-bottom: 40px;
 }
