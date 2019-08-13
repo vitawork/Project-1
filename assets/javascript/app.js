@@ -1,5 +1,5 @@
-var audiofail = new Audio("../sounds/fail.mp3");
-var audiocorrect = new Audio("../sounds/correct.wav");
+var audiofail = new Audio("assets/sounds/fail.mp3");
+var audiocorrect = new Audio("assets/sounds/correct.wav");
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
